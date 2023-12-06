@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package org.m2sec.rpc;
+
+message Header {
+  string name = 1;
+  string value = 2;
+}
+
+message Request {
+  string httpVersion = 1;
+  string method = 2;
+  string url = 3;
+  repeated Header header = 4;
+  bytes content = 5;
+}
+
+message Response {
+  string httpVersion = 1;
+  int32 statusCode = 2;
+  string reason = 3;
+  repeated Header header = 4;
+  bytes content = 5;
+}
+
+service CounterService {
+  rpc counterRequestToBeSent(Request) returns (Request);
+  rpc counterResponseReceived(Response) returns (Response);
+  rpc counterProxyRequestReceived(Request) returns (Request);
+  rpc counterProxyRequestToBeSent(Request) returns (Request);
+  rpc counterProxyResponseReceived(Response) returns (Response);
+  rpc counterProxyResponseToBeSent(Response) returns (Response);
+}
