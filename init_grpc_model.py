@@ -18,8 +18,8 @@ with open(source_filepath, "r", encoding="utf-8") as f_source, open(
     f_dest.write(f_source.read())
 
 # init proto model
-# cmd: python -m grpc_tools.protoc -I./proto --python_out=grpc --grpc_python_out=grpc proto/Counter.proto
+# cmd: python -m grpc_tools.protoc -I./proto --python_out=grpc_models --grpc_python_out=grpc_models proto/Counter.proto
 
 os.system(
-    "python -m grpc_tools.protoc -I./proto --python_out=grpc --grpc_python_out=grpc proto/Counter.proto"
+    "python -m grpc_tools.protoc -I./proto --python_out=grpc_models --grpc_python_out=grpc_models proto/Counter.proto"
 )
