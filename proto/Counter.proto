@@ -8,11 +8,17 @@ message Header {
 }
 
 message Request {
-  string httpVersion = 1;
-  string method = 2;
-  string url = 3;
-  repeated Header header = 4;
-  bytes content = 5;
+  bool isSSL = 1;
+  string httpVersion = 2;
+  string method = 3;
+  string url = 4;
+  repeated Header header = 5;
+  bytes content = 6;
+}
+
+message RequestAndSetting {
+  Request request = 1;
+  map<string, string> setting = 2;
 }
 
 message Response {
@@ -23,11 +29,14 @@ message Response {
   bytes content = 5;
 }
 
+message ResponseAndSetting {
+  Response response = 1;
+  map<string, string> setting = 2;
+}
+
 service CounterService {
-  rpc counterRequestToBeSent(Request) returns (Request);
-  rpc counterResponseReceived(Response) returns (Response);
-  rpc counterProxyRequestReceived(Request) returns (Request);
-  rpc counterProxyRequestToBeSent(Request) returns (Request);
-  rpc counterProxyResponseReceived(Response) returns (Response);
-  rpc counterProxyResponseToBeSent(Response) returns (Response);
+  rpc hookRequestToBurp(RequestAndSetting) returns (Request);
+  rpc hookRequestToServer(RequestAndSetting) returns (Request);
+  rpc hookResponseToBurp(ResponseAndSetting) returns (Response);
+  rpc hookResponseToClient(ResponseAndSetting) returns (Response);
 }

@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import Counter_pb2 as Counter__pb2
+import grpc_models.Counter_pb2 as Counter__pb2
 
 
 class CounterServiceStub(object):
@@ -14,34 +14,24 @@ class CounterServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.counterRequestToBeSent = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterRequestToBeSent',
-                request_serializer=Counter__pb2.Request.SerializeToString,
+        self.hookRequestToBurp = channel.unary_unary(
+                '/org.m2sec.rpc.CounterService/hookRequestToBurp',
+                request_serializer=Counter__pb2.RequestAndSetting.SerializeToString,
                 response_deserializer=Counter__pb2.Request.FromString,
                 )
-        self.counterResponseReceived = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterResponseReceived',
-                request_serializer=Counter__pb2.Response.SerializeToString,
+        self.hookRequestToServer = channel.unary_unary(
+                '/org.m2sec.rpc.CounterService/hookRequestToServer',
+                request_serializer=Counter__pb2.RequestAndSetting.SerializeToString,
+                response_deserializer=Counter__pb2.Request.FromString,
+                )
+        self.hookResponseToBurp = channel.unary_unary(
+                '/org.m2sec.rpc.CounterService/hookResponseToBurp',
+                request_serializer=Counter__pb2.ResponseAndSetting.SerializeToString,
                 response_deserializer=Counter__pb2.Response.FromString,
                 )
-        self.counterProxyRequestReceived = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterProxyRequestReceived',
-                request_serializer=Counter__pb2.Request.SerializeToString,
-                response_deserializer=Counter__pb2.Request.FromString,
-                )
-        self.counterProxyRequestToBeSent = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterProxyRequestToBeSent',
-                request_serializer=Counter__pb2.Request.SerializeToString,
-                response_deserializer=Counter__pb2.Request.FromString,
-                )
-        self.counterProxyResponseReceived = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterProxyResponseReceived',
-                request_serializer=Counter__pb2.Response.SerializeToString,
-                response_deserializer=Counter__pb2.Response.FromString,
-                )
-        self.counterProxyResponseToBeSent = channel.unary_unary(
-                '/org.m2sec.rpc.CounterService/counterProxyResponseToBeSent',
-                request_serializer=Counter__pb2.Response.SerializeToString,
+        self.hookResponseToClient = channel.unary_unary(
+                '/org.m2sec.rpc.CounterService/hookResponseToClient',
+                request_serializer=Counter__pb2.ResponseAndSetting.SerializeToString,
                 response_deserializer=Counter__pb2.Response.FromString,
                 )
 
@@ -49,37 +39,25 @@ class CounterServiceStub(object):
 class CounterServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def counterRequestToBeSent(self, request, context):
+    def hookRequestToBurp(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def counterResponseReceived(self, request, context):
+    def hookRequestToServer(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def counterProxyRequestReceived(self, request, context):
+    def hookResponseToBurp(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def counterProxyRequestToBeSent(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def counterProxyResponseReceived(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def counterProxyResponseToBeSent(self, request, context):
+    def hookResponseToClient(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -88,34 +66,24 @@ class CounterServiceServicer(object):
 
 def add_CounterServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'counterRequestToBeSent': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterRequestToBeSent,
-                    request_deserializer=Counter__pb2.Request.FromString,
+            'hookRequestToBurp': grpc.unary_unary_rpc_method_handler(
+                    servicer.hookRequestToBurp,
+                    request_deserializer=Counter__pb2.RequestAndSetting.FromString,
                     response_serializer=Counter__pb2.Request.SerializeToString,
             ),
-            'counterResponseReceived': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterResponseReceived,
-                    request_deserializer=Counter__pb2.Response.FromString,
+            'hookRequestToServer': grpc.unary_unary_rpc_method_handler(
+                    servicer.hookRequestToServer,
+                    request_deserializer=Counter__pb2.RequestAndSetting.FromString,
+                    response_serializer=Counter__pb2.Request.SerializeToString,
+            ),
+            'hookResponseToBurp': grpc.unary_unary_rpc_method_handler(
+                    servicer.hookResponseToBurp,
+                    request_deserializer=Counter__pb2.ResponseAndSetting.FromString,
                     response_serializer=Counter__pb2.Response.SerializeToString,
             ),
-            'counterProxyRequestReceived': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterProxyRequestReceived,
-                    request_deserializer=Counter__pb2.Request.FromString,
-                    response_serializer=Counter__pb2.Request.SerializeToString,
-            ),
-            'counterProxyRequestToBeSent': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterProxyRequestToBeSent,
-                    request_deserializer=Counter__pb2.Request.FromString,
-                    response_serializer=Counter__pb2.Request.SerializeToString,
-            ),
-            'counterProxyResponseReceived': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterProxyResponseReceived,
-                    request_deserializer=Counter__pb2.Response.FromString,
-                    response_serializer=Counter__pb2.Response.SerializeToString,
-            ),
-            'counterProxyResponseToBeSent': grpc.unary_unary_rpc_method_handler(
-                    servicer.counterProxyResponseToBeSent,
-                    request_deserializer=Counter__pb2.Response.FromString,
+            'hookResponseToClient': grpc.unary_unary_rpc_method_handler(
+                    servicer.hookResponseToClient,
+                    request_deserializer=Counter__pb2.ResponseAndSetting.FromString,
                     response_serializer=Counter__pb2.Response.SerializeToString,
             ),
     }
@@ -129,7 +97,7 @@ class CounterService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def counterRequestToBeSent(request,
+    def hookRequestToBurp(request,
             target,
             options=(),
             channel_credentials=None,
@@ -139,14 +107,14 @@ class CounterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterRequestToBeSent',
-            Counter__pb2.Request.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/hookRequestToBurp',
+            Counter__pb2.RequestAndSetting.SerializeToString,
             Counter__pb2.Request.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def counterResponseReceived(request,
+    def hookRequestToServer(request,
             target,
             options=(),
             channel_credentials=None,
@@ -156,14 +124,31 @@ class CounterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterResponseReceived',
-            Counter__pb2.Response.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/hookRequestToServer',
+            Counter__pb2.RequestAndSetting.SerializeToString,
+            Counter__pb2.Request.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def hookResponseToBurp(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/hookResponseToBurp',
+            Counter__pb2.ResponseAndSetting.SerializeToString,
             Counter__pb2.Response.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def counterProxyRequestReceived(request,
+    def hookResponseToClient(request,
             target,
             options=(),
             channel_credentials=None,
@@ -173,59 +158,8 @@ class CounterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterProxyRequestReceived',
-            Counter__pb2.Request.SerializeToString,
-            Counter__pb2.Request.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def counterProxyRequestToBeSent(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterProxyRequestToBeSent',
-            Counter__pb2.Request.SerializeToString,
-            Counter__pb2.Request.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def counterProxyResponseReceived(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterProxyResponseReceived',
-            Counter__pb2.Response.SerializeToString,
-            Counter__pb2.Response.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def counterProxyResponseToBeSent(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/counterProxyResponseToBeSent',
-            Counter__pb2.Response.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/org.m2sec.rpc.CounterService/hookResponseToClient',
+            Counter__pb2.ResponseAndSetting.SerializeToString,
             Counter__pb2.Response.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
