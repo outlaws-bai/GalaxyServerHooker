@@ -29,9 +29,6 @@ def aes_encrypt(data: bytes) -> bytes:
     return base64.b64encode(ct_bytes)
 
 
-lambda x: json.loads(x.decode())["data"]
-
-
 # AES解密函数
 def aes_decrypt(data: bytes) -> bytes:
     data1 = base64.b64decode(data)
