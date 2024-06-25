@@ -13,31 +13,19 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eHttpHook.proto\x12\rorg.m2sec.rpc\"\x1c\n\nStringList\x12\x0e\n\x06values\x18\x01 \x03(\t\"\xf1\x02\n\x07Request\x12\x0e\n\x06secure\x18\x01 \x01(\x08\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\x05\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0e\n\x06method\x18\x05 \x01(\t\x12\x0c\n\x04path\x18\x06 \x01(\t\x12\x30\n\x05query\x18\x07 \x03(\x0b\x32!.org.m2sec.rpc.Request.QueryEntry\x12\x34\n\x07headers\x18\x08 \x03(\x0b\x32#.org.m2sec.rpc.Request.HeadersEntry\x12\x0f\n\x07\x63ontent\x18\t \x01(\x0c\x1aG\n\nQueryEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.org.m2sec.rpc.StringList:\x02\x38\x01\x1aI\n\x0cHeadersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.org.m2sec.rpc.StringList:\x02\x38\x01\"\xd2\x01\n\x08Response\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\nstatusCode\x18\x02 \x01(\x05\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x35\n\x07headers\x18\x04 \x03(\x0b\x32$.org.m2sec.rpc.Response.HeadersEntry\x12\x0f\n\x07\x63ontent\x18\x05 \x01(\x0c\x1aI\n\x0cHeadersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.org.m2sec.rpc.StringList:\x02\x38\x01\x32\xaf\x02\n\x0fHttpHookService\x12\x43\n\x11hookRequestToBurp\x12\x16.org.m2sec.rpc.Request\x1a\x16.org.m2sec.rpc.Request\x12\x45\n\x13hookRequestToServer\x12\x16.org.m2sec.rpc.Request\x1a\x16.org.m2sec.rpc.Request\x12\x46\n\x12hookResponseToBurp\x12\x17.org.m2sec.rpc.Response\x1a\x17.org.m2sec.rpc.Response\x12H\n\x14hookResponseToClient\x12\x17.org.m2sec.rpc.Response\x1a\x17.org.m2sec.rpc.Responseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eHttpHook.proto\x12\rorg.m2sec.rpc\"$\n\x06Header\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\xa1\x01\n\x07Request\x12\x0e\n\x06secure\x18\x01 \x01(\x08\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\x05\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0e\n\x06method\x18\x05 \x01(\t\x12\x10\n\x08\x66ullPath\x18\x06 \x01(\t\x12&\n\x07headers\x18\x07 \x03(\x0b\x32\x15.org.m2sec.rpc.Header\x12\x0f\n\x07\x63ontent\x18\x08 \x01(\x0c\"x\n\x08Response\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\nstatusCode\x18\x02 \x01(\x05\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12&\n\x07headers\x18\x04 \x03(\x0b\x32\x15.org.m2sec.rpc.Header\x12\x0f\n\x07\x63ontent\x18\x05 \x01(\x0c\x32\xaf\x02\n\x0fHttpHookService\x12\x43\n\x11hookRequestToBurp\x12\x16.org.m2sec.rpc.Request\x1a\x16.org.m2sec.rpc.Request\x12\x45\n\x13hookRequestToServer\x12\x16.org.m2sec.rpc.Request\x1a\x16.org.m2sec.rpc.Request\x12\x46\n\x12hookResponseToBurp\x12\x17.org.m2sec.rpc.Response\x1a\x17.org.m2sec.rpc.Response\x12H\n\x14hookResponseToClient\x12\x17.org.m2sec.rpc.Response\x1a\x17.org.m2sec.rpc.Responseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'HttpHook_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _REQUEST_QUERYENTRY._options = None
-  _REQUEST_QUERYENTRY._serialized_options = b'8\001'
-  _REQUEST_HEADERSENTRY._options = None
-  _REQUEST_HEADERSENTRY._serialized_options = b'8\001'
-  _RESPONSE_HEADERSENTRY._options = None
-  _RESPONSE_HEADERSENTRY._serialized_options = b'8\001'
-  _globals['_STRINGLIST']._serialized_start=33
-  _globals['_STRINGLIST']._serialized_end=61
-  _globals['_REQUEST']._serialized_start=64
-  _globals['_REQUEST']._serialized_end=433
-  _globals['_REQUEST_QUERYENTRY']._serialized_start=287
-  _globals['_REQUEST_QUERYENTRY']._serialized_end=358
-  _globals['_REQUEST_HEADERSENTRY']._serialized_start=360
-  _globals['_REQUEST_HEADERSENTRY']._serialized_end=433
-  _globals['_RESPONSE']._serialized_start=436
-  _globals['_RESPONSE']._serialized_end=646
-  _globals['_RESPONSE_HEADERSENTRY']._serialized_start=360
-  _globals['_RESPONSE_HEADERSENTRY']._serialized_end=433
-  _globals['_HTTPHOOKSERVICE']._serialized_start=649
-  _globals['_HTTPHOOKSERVICE']._serialized_end=952
+  _globals['_HEADER']._serialized_start=33
+  _globals['_HEADER']._serialized_end=69
+  _globals['_REQUEST']._serialized_start=72
+  _globals['_REQUEST']._serialized_end=233
+  _globals['_RESPONSE']._serialized_start=235
+  _globals['_RESPONSE']._serialized_end=355
+  _globals['_HTTPHOOKSERVICE']._serialized_start=358
+  _globals['_HTTPHOOKSERVICE']._serialized_end=661
 # @@protoc_insertion_point(module_scope)

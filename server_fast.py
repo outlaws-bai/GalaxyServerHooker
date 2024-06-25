@@ -14,6 +14,7 @@ app = FastAPI()
 # 密钥和IV（初始向量），AES-256需要32字节的密钥和16字节的IV
 KEY = b"32byteslongsecretkeyforaes256!aa"
 IV = b"16byteslongiv456"
+# request: {"data": "0gXNBPtsCJ903KCjvXD6rQEod3XJ69SFCpN8QHuRQPw="}
 
 # 模拟用户数据库
 users_db = {
