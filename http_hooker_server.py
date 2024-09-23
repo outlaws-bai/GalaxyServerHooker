@@ -68,30 +68,32 @@ app = FastAPI()
 
 
 @app.post("/hookRequestToBurp", response_model=RequestModel)
-def hookRequestToBurp(request: RequestModel):
+async def hookRequestToBurp(request: RequestModel):
     request.set_content(aes_decrypt(get_encrypt_text(request.get_content())))
     return request
 
 
 @app.post("/hookRequestToServer", response_model=RequestModel)
-def hookRequestToServer(request: RequestModel):
+async def hookRequestToServer(request: RequestModel):
     request.set_content(to_encrypt_body(aes_encrypt(request.get_content())))
     return request
 
 
 @app.post("/hookResponseToBurp", response_model=ResponseModel)
-def hookResponseToBurp(response: ResponseModel):
+async def hookResponseToBurp(response: ResponseModel):
     response.set_content(aes_decrypt(get_encrypt_text(response.get_content())))
     return response
 
 
 @app.post("/hookResponseToClient", response_model=ResponseModel)
-def hookResponseToClient(response: ResponseModel):
+async def hookResponseToClient(response: ResponseModel):
     response.set_content(to_encrypt_body(aes_encrypt(response.get_content())))
     return response
 
 
 if __name__ == "__main__":
+    # 多进程启动
+    # uvicorn manager:app --host 0.0.0.0 --port 8000 --workers 4
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=5000)
