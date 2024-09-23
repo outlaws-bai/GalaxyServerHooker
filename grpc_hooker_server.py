@@ -1,7 +1,7 @@
 # coding: utf-8
 # @author: outlaws-bai
 # @date: 2024/05/31 16:07:10
-# @description:
+# @description: 对应示例中的 AesCbc
 import json
 import time
 import grpc
