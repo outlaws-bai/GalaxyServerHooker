@@ -1,7 +1,7 @@
 # coding: utf-8
 # @author: outlaws-bai
 # @date: 2024/09/22 16:55:53
-# @description:
+# @description: 对应示例中的 AesCbc
 import json
 import base64
 from fastapi import FastAPI
@@ -47,7 +47,7 @@ class RequestModel(BaseModel):
         return base64.b64decode(self.contentBase64)
 
     def set_content(self, content: bytes):
-        self.contentBase64 = base64.b64encode(content)
+        self.contentBase64 = base64.b64encode(content).decode()
 
 
 class ResponseModel(BaseModel):
@@ -61,7 +61,7 @@ class ResponseModel(BaseModel):
         return base64.b64decode(self.contentBase64)
 
     def set_content(self, content: bytes):
-        self.contentBase64 = base64.b64encode(content)
+        self.contentBase64 = base64.b64encode(content).decode()
 
 
 app = FastAPI()
