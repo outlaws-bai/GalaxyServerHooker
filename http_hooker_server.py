@@ -43,6 +43,12 @@ class RequestModel(BaseModel):
     headers: Dict[str, List[str]]
     contentBase64: str
 
+    def get_content(self) -> bytes:
+        return base64.b64decode(self.contentBase64)
+
+    def set_content(self, content: bytes):
+        self.contentBase64 = base64.b64encode(content)
+
 
 class ResponseModel(BaseModel):
     version: str
@@ -51,39 +57,37 @@ class ResponseModel(BaseModel):
     headers: Dict[str, List[str]]
     contentBase64: str
 
+    def get_content(self) -> bytes:
+        return base64.b64decode(self.contentBase64)
+
+    def set_content(self, content: bytes):
+        self.contentBase64 = base64.b64encode(content)
+
 
 app = FastAPI()
 
 
 @app.post("/hookRequestToBurp", response_model=RequestModel)
 def hookRequestToBurp(request: RequestModel):
-    request.contentBase64 = base64.b64encode(
-        aes_decrypt(get_encrypt_text(base64.b64decode(request.contentBase64)))
-    ).decode()
+    request.set_content(aes_decrypt(get_encrypt_text(request.get_content())))
     return request
 
 
 @app.post("/hookRequestToServer", response_model=RequestModel)
 def hookRequestToServer(request: RequestModel):
-    request.contentBase64 = base64.b64encode(
-        to_encrypt_body(aes_encrypt(base64.b64decode(request.contentBase64)))
-    ).decode()
+    request.set_content(to_encrypt_body(aes_encrypt(request.get_content())))
     return request
 
 
 @app.post("/hookResponseToBurp", response_model=ResponseModel)
 def hookResponseToBurp(response: ResponseModel):
-    response.contentBase64 = base64.b64encode(
-        aes_decrypt(get_encrypt_text(base64.b64decode(response.contentBase64)))
-    ).decode()
+    response.set_content(aes_decrypt(get_encrypt_text(response.get_content())))
     return response
 
 
 @app.post("/hookResponseToClient", response_model=ResponseModel)
 def hookResponseToClient(response: ResponseModel):
-    response.contentBase64 = base64.b64encode(
-        to_encrypt_body(aes_encrypt(base64.b64decode(response.contentBase64)))
-    ).decode()
+    response.set_content(to_encrypt_body(aes_encrypt(response.get_content())))
     return response
 
 
