@@ -69,31 +69,35 @@ app = FastAPI()
 
 @app.post("/hookRequestToBurp", response_model=RequestModel)
 async def hookRequestToBurp(request: RequestModel):
+    """HTTP请求从客户端到达Burp时被调用。在此处完成请求解密的代码就可以在Burp中看到明文的请求报文。"""
     request.set_content(aes_decrypt(get_encrypt_text(request.get_content())))
     return request
 
 
 @app.post("/hookRequestToServer", response_model=RequestModel)
 async def hookRequestToServer(request: RequestModel):
+    """HTTP请求从Burp将要发送到Server时被调用。在此处完成请求加密的代码就可以将加密后的请求报文发送到Server。"""
     request.set_content(to_encrypt_body(aes_encrypt(request.get_content())))
     return request
 
 
 @app.post("/hookResponseToBurp", response_model=ResponseModel)
 async def hookResponseToBurp(response: ResponseModel):
+    """HTTP请求从Server到达Burp时被调用。在此处完成响应解密的代码就可以在Burp中看到明文的响应报文。"""
     response.set_content(aes_decrypt(get_encrypt_text(response.get_content())))
     return response
 
 
 @app.post("/hookResponseToClient", response_model=ResponseModel)
 async def hookResponseToClient(response: ResponseModel):
+    """HTTP请求从Burp将要发送到Client时被调用。在此处完成响应加密的代码就可以将加密后的响应报文返回给Client。"""
     response.set_content(to_encrypt_body(aes_encrypt(response.get_content())))
     return response
 
 
 if __name__ == "__main__":
     # 多进程启动
-    # uvicorn http_hooker_server:app --host 0.0.0.0 --port 5000 --workers 4
+    # uvicorn manager:app --host 0.0.0.0 --port 5000 --workers 4
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=5000)
