@@ -1,7 +1,7 @@
 # GalaxyServerHooker
 提供[Galaxy](https://github.com/outlaws-bai/Galaxy)中需要的GRpc & Http实现
 
-> python3.9+
+> python3.8+
 
 ## install
 
