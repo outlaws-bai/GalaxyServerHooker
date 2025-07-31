@@ -31,6 +31,7 @@ class ResponseModel(BaseModel):
     reason: str
     headers: t.Dict[str, t.List[str]]
     contentBase64: str
+    request: t.Optional[RequestModel] = None  # readonly
 
     @property
     def content(self) -> bytes:

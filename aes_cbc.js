@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const bodyParser = require("body-parser");
 
 const app = express();
-const PORT = 5002;
+const PORT = 5000;
 
 // 全局密钥和IV
 const KEY = Buffer.from("32byteslongsecretkeyforaes256!aa"); // 32字节密钥
@@ -46,6 +46,7 @@ function toData(content) {
 // 请求钩子：hookRequestToBurp
 app.post("/hookRequestToBurp", (lreq, lres) => {
   const request = lreq.body
+  console.log(`[+] hookRequestToBurp be called. request: %j`, request)
   try {
     const encryptedData = getData(Buffer.from(request.contentBase64, "base64"));
     const data = decrypt(encryptedData);
@@ -59,6 +60,7 @@ app.post("/hookRequestToBurp", (lreq, lres) => {
 // 请求钩子：hookRequestToServer
 app.post("/hookRequestToServer", (lreq, lres) => {
   const request = lreq.body
+  console.log(`[+] hookRequestToServer be called. request: %j`, request)
   try {
     const data = Buffer.from(request.contentBase64, "base64");
     const encryptedData = encrypt(data);
@@ -73,6 +75,8 @@ app.post("/hookRequestToServer", (lreq, lres) => {
 // 响应钩子：hookResponseToBurp
 app.post("/hookResponseToBurp", (lreq, lres) => {
   const response = lreq.body
+  const request = response.request // readonly
+  console.log(`[+] hookResponseToBurp be called. response: %j`, response)
   try {
     const encryptedData = getData(Buffer.from(response.contentBase64, "base64"));
     const data = decrypt(encryptedData);
@@ -86,6 +90,8 @@ app.post("/hookResponseToBurp", (lreq, lres) => {
 // 响应钩子：hookResponseToClient
 app.post("/hookResponseToClient", (lreq, lres) => {
   const response = lreq.body
+  const request = response.request // readonly
+  console.log(`[+] hookResponseToClient be called. response: %j`, response)
   try {
     const data = Buffer.from(response.contentBase64, "base64");
     const encryptedData = encrypt(data);

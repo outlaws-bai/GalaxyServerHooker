@@ -16,6 +16,7 @@ app = FastAPI()
 @app.post("/hookRequestToBurp", response_model=RequestModel)
 async def hook_request_to_burp(request: RequestModel):
     """HTTP请求从客户端到达Burp时被调用。在此处完成请求解密的代码就可以在Burp中看到明文的请求报文。"""
+    print(f"[+] hookRequestToBurp be called. request: {request.model_dump_json()}")
     # 获取需要解密的数据
     encrypted_data: bytes = get_data(request.content)
     # 调用函数解密
@@ -28,6 +29,7 @@ async def hook_request_to_burp(request: RequestModel):
 @app.post("/hookRequestToServer", response_model=RequestModel)
 async def hook_request_to_server(request: RequestModel):
     """HTTP请求从Burp将要发送到Server时被调用。在此处完成请求加密的代码就可以将加密后的请求报文发送到Server。"""
+    print(f"[+] hookRequestToServer be called. request: {request.model_dump_json()}")
     # 获取被解密的数据
     data: bytes = request.content
     # 调用函数加密回去
@@ -42,6 +44,7 @@ async def hook_request_to_server(request: RequestModel):
 @app.post("/hookResponseToBurp", response_model=ResponseModel)
 async def hook_response_to_burp(response: ResponseModel):
     """HTTP响应从Server到达Burp时被调用。在此处完成响应解密的代码就可以在Burp中看到明文的响应报文。"""
+    print(f"[+] hookResponseToBurp be called. response: {response.model_dump_json()}")
     # 获取需要解密的数据
     encryptedData: bytes = get_data(response.content)
     # 调用函数解密
@@ -54,6 +57,7 @@ async def hook_response_to_burp(response: ResponseModel):
 @app.post("/hookResponseToClient", response_model=ResponseModel)
 async def hook_response_to_client(response: ResponseModel):
     """HTTP响应从Burp将要发送到Client时被调用。在此处完成响应加密的代码就可以将加密后的响应报文返回给Client。"""
+    print(f"[+] hookResponseToClient be called. response: {response.model_dump_json()}")
     # 获取被解密的数据
     data: bytes = response.content
     # 调用函数加密回去
